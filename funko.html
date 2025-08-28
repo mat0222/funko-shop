@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funko Shop</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <link rel="stylesheet" href="funko.css" />
+    <link rel="icon" type="image/png" href="imagenes/comercio.ico" />
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div style="display: flex; align-items: center; gap: 40px;">
+                    <div class="logo">Funko</div>
+                    <nav class="nav">
+                        <a href="#">TIENDA</a>
+                        <a href="#">PRODUCTOS</a>
+                        <a href="#">FUNKOS EXCLUSIVOS</a>
+                    </nav>
+                </div>
+                <div class="header-icons">
+                    <button class="header-btn">
+                        <span class="icon-search">🔍</span>
+                    </button>
+                    <button class="header-btn">
+                        <span class="icon-cart">🛒</span>
+                        <span class="cart-count">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>BIENVENIDO A FUNKO<br>SHOP</h1>
+                    <p>Tu Lugar De Felicidad Asegurada.</p>
+                    <button class="btn-primary">Nuestros Exclusivos</button>
+                </div>
+                <div class="hero-image">
+                    <img src="imagenes/starwar.png" alt="Funko Characters">
+                </div>
+            </div>
+        </div>
+        <div class="wave"></div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products">
+        <div class="container">
+            <div class="products-section">
+                <!-- Primera fila: ANIME + 3 Funkos -->
+                <div class="product-row">
+                    <div class="category-card">
+                        <div>
+                            <h3>FIVE NIGHT AT FREDDY'S</h3>
+                        </div>
+                        <div class="category-decoration"></div>
+                        <div class="category-image">
+                            <img src="imagenes/freddyy.png" alt="Anime Funkos">
+                        </div>
+                    </div>
+
+                    <div class="product-card" data-product="all-for-one">
+                        <div class="product-image">
+                            <img src="imagenes/dragur.jpg" alt="All For One Funko Pop">
+                        </div>
+                        <h3 class="product-title">POP! GOD OF WAR: DRAUGR</h3>
+                        <button class="btn-explore"> EXPLORAR</button>
+                    </div>
+
+                    <div class="product-card" data-product="all-might">
+                        <div class="product-image">
+                            <img src="imagenes/kratos.png" alt="All Might Funko Pop">
+                        </div>
+                        <h3 class="product-title">POP! GOD OF WAR: KRATOS</h3>
+                        <button class="btn-explore"> EXPLORAR</button>
+                    </div>
+
+                    <div class="product-card" data-product="momo">
+                        <div class="product-image">
+                            <img src="imagenes/golden freddy.png" alt="Momo Funko Pop">
+                        </div>
+                        <h3 class="product-title">POP! FIVE NIGHT AT FREDDY'S: WITHERED GOLDEN FREDDY </h3>
+                        <button class="btn-explore"> EXPLORAR</button>
+                    </div>
+                </div>
+
+                <!-- Segunda fila: MOVIES + 3 Funkos más -->
+                <div class="product-row">
+                    <div class="category-card-blue">
+                        <div>
+                            <h3>GOD OF WAR</h3>
+                        </div>
+                        <div class="category-decoration-blue"></div>
+                        <div class="category-image">
+                            <img src="imagenes/broksindri.png" alt="Movie Funkos">
+                        </div>
+                    </div>
+
+                    <div class="product-card" data-product="tokoyami">
+                        <div class="product-image">
+                            <img src="imagenes/messi.jpg" alt="Tokoyami Funko Pop">
+                        </div>
+                        <h3 class="product-title">POP! FUTBOL: LIONEL MESSI</h3>
+                        <button class="btn-explore">EXPLORAR</button>
+                    </div>
+
+                    <div class="product-card" data-product="spider-man">
+                        <div class="product-image">
+                            <img src="imagenes/venom.png" alt="Spider Man Funko Pop">
+                        </div>
+                        <h3 class="product-title">POP! SONY: VENOM</h3>
+                        <button class="btn-explore"> EXPLORAR</button>
+                    </div>
+
+                    <div class="product-card" data-product="batman">
+                        <div class="product-image">
+                            <img src="imagenes/broly.jpg" alt="Batman Funko Pop">
+                        </div>
+                        <h3 class="product-title">POP! DRAGON BALL SUPER: BROLY</h3>
+                        <button class="btn-explore">EXPLORAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Page -->
+    <section id="cartPage" class="cart-page">
+        <div class="container">
+            <div class="cart-header">
+                <h1 class="cart-title">Tu Carrito</h1>
+                <button class="continue-shopping" onclick="showMainPage()">← Continuar Comprando</button>
+            </div>
+            
+            <div id="cartContent" class="cart-content">
+                <!-- Cart items will be populated by JavaScript -->
+            </div>
+            
+            <div id="emptyCart" class="empty-cart" style="display: none;">
+                <div class="empty-cart-icon">🛒</div>
+                <h3>Tu carrito está vacío</h3>
+                <p>¡Agrega algunos Funko Pops increíbles a tu colección!</p>
+                <button class="continue-shopping" onclick="showMainPage()">Explorar Productos</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Checkout Page -->
+    <section id="checkoutPage" class="checkout-page">
+        <div class="container">
+            <div class="checkout-header">
+                <h1 class="checkout-title">Finalizar Compra</h1>
+                <p class="checkout-subtitle">Completa tu información para procesar el pago</p>
+            </div>
+            
+            <div class="checkout-content">
+                <div class="checkout-form">
+                    <button class="back-to-cart" onclick="showCartPage()">← Volver al Carrito</button>
+                    
+                    <form id="payment-form">
+                        <div class="form-section">
+                            <h3> Información de Contacto</h3>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3>Dirección de Envío</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName">Nombre</label>
+                                    <input type="text" id="firstName" name="firstName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Apellido</label>
+                                    <input type="text" id="lastName" name="lastName" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Dirección</label>
+                                <input type="text" id="address" name="address" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city">Ciudad</label>
+                                    <input type="text" id="city" name="city" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="postalCode">Código Postal</label>
+                                    <input type="text" id="postalCode" name="postalCode" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="country">País</label>
+                                <select id="country" name="country" required>
+                                    <option value="">Seleccionar país</option>
+                                    <option value="ES">España</option>
+                                    <option value="MX">México</option>
+                                    <option value="AR">Argentina</option>
+                                    <option value="CO">Colombia</option>
+                                    <option value="US">Estados Unidos</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3>Información de Pago</h3>
+                            <div class="form-group">
+                                <label for="card-element">Tarjeta de Crédito o Débito</label>
+                                <div id="card-element" class="stripe-element">
+                                    <!-- Stripe Elements will create form elements here -->
+                                </div>
+                                <div class="payment-icons">
+                                    <div class="payment-icon">VISA</div>
+                                    <div class="payment-icon">MC</div>
+                                    <div class="payment-icon">AMEX</div>
+                                    <div class="payment-icon">💳</div>
+                                </div>
+                                <div id="card-errors" class="error-message"></div>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="submit-payment" class="pay-button">
+                            <span id="button-text">Pagar Ahora</span>
+                            <div id="spinner" class="loading-spinner" style="display: none;"></div>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="order-summary">
+                    <h2 class="summary-title">Resumen del Pedido</h2>
+                    <div id="checkout-items">
+                        <!-- Items will be populated by JavaScript -->
+                    </div>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span id="checkout-subtotal">$0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Envío</span>
+                        <span id="checkout-shipping">$0.00</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span id="checkout-total">$0.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="product-detail">
+                <div class="product-detail-image">
+                    <img id="modalImage" src="/placeholder.svg" alt="">
+                </div>
+                <div class="product-detail-info">
+                    <h2 id="modalTitle"></h2>
+                    <p class="product-description" id="modalDescription"></p>
+                    <div class="product-collection">
+                        <strong>Colección:</strong> <span id="modalCollection"></span>
+                    </div>
+                    <div class="product-detail-price" id="modalPrice"></div>
+                    <button class="btn-add-to-cart">🛒 AÑADIR AL CARRITO</button>
+                    
+                    <div class="product-tabs">
+                        <div class="tab-buttons">
+                            <button class="tab-btn active" data-tab="info">INFORMACIÓN DEL PRODUCTO</button>
+                            <button class="tab-btn" data-tab="shipping">ENVÍO Y DEVOLUCIONES</button>
+                        </div>
+                        <div class="tab-content active" id="info-tab">
+                            <div class="product-specs">
+                                <div class="spec-item">
+                                    <span class="spec-label">Material</span>
+                                    <span class="spec-value">Vinilo</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">Altura</span>
+                                    <span class="spec-value">9.5 cm</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">Peso</span>
+                                    <span class="spec-value">150g</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">Tipo</span>
+                                    <span class="spec-value">Figura Coleccionable</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-content" id="shipping-tab">
+                            <p><strong>Envío:</strong> Envío gratuito en pedidos superiores a $25. Entrega en 3-5 días laborables.</p>
+                            <p><strong>Devoluciones:</strong> Devoluciones gratuitas dentro de 30 días. El producto debe estar en condiciones originales.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="success-modal">
+        <div class="success-modal-content">
+            <!-- Confetti -->
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            <div class="confetti"></div>
+            
+            <div class="success-icon">🎉</div>
+            <h2 class="success-title">¡Compra Exitosa!</h2>
+            <p class="success-subtitle">¡Felicidades por tu nuevo Funko Pop!</p>
+            
+            <div class="purchase-details">
+                <div class="purchase-items" id="successItems">
+                    <!-- Items will be populated by JavaScript -->
+                </div>
+                <div class="total-amount" id="successTotal">$0.00</div>
+            </div>
+            
+            <div class="success-message">
+                🚚 Tu pedido será procesado y enviado en las próximas 24 horas.<br>
+                📧 Recibirás un email de confirmación con los detalles de seguimiento.
+            </div>
+            
+            <div class="success-actions">
+                <button class="success-btn" onclick="closeSuccessModal()">🏠 Seguir Comprando</button>
+                <button class="success-btn secondary" onclick="downloadReceipt()">📄 Descargar Recibo</button>
+            </div>
+        </div>
+    </div>
+
+  <script src="funko.js"></script>
+</body>
+</html>
